@@ -1,31 +1,30 @@
 import * as React from 'react';
+import { Layout, Switch, Text } from '@smarteat/ui';
+import Header from '../../src/components/Header/Header';
+import { SafeAreaView, StatusBar } from 'react-native';
+import { useState } from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from '@smarteat/ui';
+const LeftComponent = () => <Text>Left</Text>;
+const RightComponent = () => <Text>Right</Text>;
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
-
+  const [switchValue, setSwitchValue] = useState(false);
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+    <Layout f={1}>
+      <SafeAreaView>
+        <StatusBar />
+      </SafeAreaView>
+      <Header
+        title="hello"
+        leftActionComponent={<LeftComponent />}
+        rightActionComponent={<RightComponent />}
+      />
+      <Switch
+        currentValue={switchValue}
+        onChange={() => {
+          setSwitchValue(!switchValue);
+        }}
+      />
+    </Layout>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
-  },
-});
